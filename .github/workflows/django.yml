@@ -27,7 +27,7 @@ jobs:
         pip install -r requirements.txt
     - name: 'Create env file'
       run: |
-        echo "${{ secrets.DJANGO_SECRET_KEY }}" > .venv
+        echo "${{ secrets.DJANGO_SECRET_KEY }}" > .env
     - name: Run Tests
       run: |
         cd s_rooms
