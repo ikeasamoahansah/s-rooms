@@ -24,6 +24,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'accounts',
     'rooms',
+    'django_vite',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
