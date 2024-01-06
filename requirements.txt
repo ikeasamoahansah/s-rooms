@@ -1,6 +1,7 @@
 asgiref<=3.7.2
 Django<=5.0
 djangorestframework<=3.14.0
+django-vite<=3.0.1
 python-decouple<=3.8
 python-dotenv<=1.0.0
 pytz<=2023.3.post1
