@@ -9,7 +9,7 @@ export default defineConfig({
         outDir: resolve("./assets"),
         rollupOptions: {
             input: {
-                < unique key>: '<path to your asset>'
+                < unique key>: './src/assets'
             }
         }
     },

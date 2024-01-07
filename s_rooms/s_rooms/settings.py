@@ -89,7 +89,15 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+DJANGO_VITE = {
+  "default": {
+    "dev_mode": True
+  }
+}
 
+STATICFILES_DIRS = [
+  BASE_DIR / "assets"
+]
 
 LANGUAGE_CODE = 'en-us'
 
