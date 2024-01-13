@@ -24,7 +24,6 @@ INSTALLED_APPS = [
     'rest_framework',
     'accounts',
     'rooms',
-    'django_vite',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -87,16 +86,6 @@ AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
-]
-
-DJANGO_VITE = {
-  "default": {
-    "dev_mode": True
-  }
-}
-
-STATICFILES_DIRS = [
-  BASE_DIR / "assets"
 ]
 
 LANGUAGE_CODE = 'en-us'
