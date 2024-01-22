@@ -10,19 +10,6 @@ class UserSerializer(serializers.ModelSerializer):
         exclude = ["password"]
 
 
-class MessageSerialzier(serializers.ModelSerializer):
-    created_at_formatted = serializers.SerializerMethodField()
-    user = UserSerializer()
-
-    class Meta:
-        model = Message
-        exlude = []
-        depth = 1
-
-    def get_created_at_formatted(self, obj:Message):
-        return obj.created_at.strftime("%d-%m-%Y %H:%M:%S")
-
-
 class RoomSerializer(serializers.ModelSerializer):
     last_message = serializers.SerializerMethodField()
     messages = MessageSerializer(many=True, read_only=True)
@@ -35,5 +22,18 @@ class RoomSerializer(serializers.ModelSerializer):
 
     def get_last_message(self, obj:Room):
         return MessageSerializer(obj.messages.order_by('created_at').last()).data
+
+
+class MessageSerialzier(serializers.ModelSerializer):
+    created_at_formatted = serializers.SerializerMethodField()
+    user = UserSerializer()
+
+    class Meta:
+        model = Message
+        exlude = []
+        depth = 1
+
+    def get_created_at_formatted(self, obj:Message):
+        return obj.created_at.strftime("%d-%m-%Y %H:%M:%S")
 
 
