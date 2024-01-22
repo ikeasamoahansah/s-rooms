@@ -10,7 +10,7 @@ class UserSerializer(serializers.ModelSerializer):
         exclude = ["password"]
 
 
-class MessageSerialzier(serializers.ModelSerializer):
+class MessageSerializer(serializers.ModelSerializer):
     created_at_formatted = serializers.SerializerMethodField()
     user = UserSerializer()
 
