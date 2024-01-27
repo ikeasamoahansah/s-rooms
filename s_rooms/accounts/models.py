@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 import uuid
 
 from django.conf import settings
@@ -23,10 +23,10 @@ class CustomUserManager(BaseUserManager):
         extra_fields.setdefault("is_staff", True)
         extra_fields.setdefault("is_superuser", True)
 
-        return self.create_user(email, password, name, **extra_fields)
+        return self.create_user(email, password, **extra_fields)
 
 
-class CustomUser(AbstractBaseUser):
+class CustomUser(AbstractBaseUser, PermissionsMixin):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4)
     email = models.EmailField(unique=True)
     name = models.CharField(max_length=256)
