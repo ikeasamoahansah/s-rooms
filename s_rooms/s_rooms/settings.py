@@ -25,6 +25,7 @@ INSTALLED_APPS = [
     'accounts',
     'rooms',
     'rest_framework.authtoken',
+    # 'djangochannelsrestframework',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
