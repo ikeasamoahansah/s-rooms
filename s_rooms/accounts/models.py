@@ -8,7 +8,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 class CustomUserManager(BaseUserManager):
-    def create_user(self, email, password=None, name=None, **extra_fields):
+    def create_user(self, email, name, password=None, **extra_fields):
         if not email:
             raise ValueError("The Email field must be set")
         email = self.normalize_email(email)
@@ -19,11 +19,11 @@ class CustomUserManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, email, password=None, name=None, **extra_fields):
+    def create_superuser(self, email, name, password=None, **extra_fields):
         extra_fields.setdefault("is_staff", True)
         extra_fields.setdefault("is_superuser", True)
 
-        return self.create_user(email, password, name=name, **extra_fields)
+        return self.create_user(email, password=password, name=name, **extra_fields)
 
 
 class CustomUser(AbstractBaseUser, PermissionsMixin):
