@@ -23,7 +23,7 @@
 
 #     @action()
 #     async def join_room(self, pk, **kwargs):
-#         self.room_subscribem = pk
+#         self.room_subscribe = pk
 #         await self.add_user_to_room(pk)
 #         await self.notify_users()
 
