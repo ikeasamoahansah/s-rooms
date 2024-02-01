@@ -28,5 +28,6 @@
 #         await self.notify_users()
 
 #     @action()
-
+#     async def leave_room(self, pk, **kwargs):
+#         await self.remove_user_from_room(pk)
     
