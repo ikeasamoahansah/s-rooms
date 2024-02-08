@@ -14,4 +14,11 @@ urlpatterns = [
         ),
         name="room-view",
     ),
+    path(
+        "create/",
+        CreateRoomView.as_view(
+            queryset=Room.objects.all(), serializer_class=RoomSerializer
+        ),
+        name="room-create",
+    )
 ]

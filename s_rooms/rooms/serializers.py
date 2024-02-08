@@ -29,7 +29,7 @@ class RoomSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Room
-        fields = ["id", "name", "host"]
+        fields = ["id", "name", "host", "last_message", "messages"]
         depth = 1
         read_only_fields = ["messages", "last_message"]
 
