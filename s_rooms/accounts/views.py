@@ -1,4 +1,5 @@
 from django.contrib.auth import logout
+from django.contrib.auth.models import User
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -6,7 +7,6 @@ from rest_framework.reverse import reverse
 from rest_framework.views import APIView
 from rest_framework import generics
 from rest_framework.permissions import AllowAny, IsAdminUser
-from .models import CustomUser
 from .serializers import *
 from .permissions import IsOwnerOrReadOnly
 
@@ -25,7 +25,7 @@ class UserList(generics.ListCreateAPIView):
     """
     List all or create accounts 
     """
-    queryset = CustomUser.objects.all()
+    queryset = User.objects.all()
     permission_classes = (IsAdminUser,)
     serializer_class = UserSerializer
 
@@ -35,13 +35,13 @@ class UserDetail(generics.RetrieveUpdateDestroyAPIView):
     Retrieve, update or delete a user instance.
     """
 
-    queryset = CustomUser.objects.all()
+    queryset = User.objects.all()
     permission_classes = (IsAdminUser, IsOwnerOrReadOnly)
     serializer_class = UserSerializer
 
 
 class RegisterUserView(generics.CreateAPIView):
-    queryset = CustomUser.objects.all()
+    queryset = User.objects.all()
     permission_classes = (AllowAny,)
     serializer_class = RegisterUserSerializer
 

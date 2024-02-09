@@ -7,7 +7,7 @@ from rest_framework import generics
 from .models import *
 from .serializers import *
 
-from accounts.models import CustomUser
+from django.contrib.auth.models import User
 
 @api_view(["GET"])
 def api_root(request, format=None):
@@ -20,7 +20,7 @@ def api_root(request, format=None):
 
 
 class CreateRoomView(generics.CreateAPIView):
-    queryset = CustomUser.objects.all()
+    queryset = User.objects.all()
     permission_classes = (IsAuthenticated, )
     serializer_class = RoomSerializer
    

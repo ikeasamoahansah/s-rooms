@@ -3,30 +3,31 @@ from django.contrib.auth.password_validation import validate_password
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 
-from .models import CustomUser
+from django.contrib.auth.models import User
+
 
 
 class UserSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(required=True)
 
     class Meta:
-        model = CustomUser
-        fields = ["id", "email", "name"]
+        model = User
+        fields = ["id", "email", "first_name"]
 
 
 class RegisterUserSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(
-        required=True, validators=[UniqueValidator(queryset=CustomUser.objects.all())]
+        required=True, validators=[UniqueValidator(queryset=User.objects.all())]
     )
-    name = serializers.CharField(write_only=True, required=True)
+    username = serializers.CharField(validators=[UniqueValidator(queryset=User.objects.all())], write_only=True, required=True)
     password = serializers.CharField(
         write_only=True, required=True, validators=[validate_password]
     )
     password2 = serializers.CharField(write_only=True, required=True)
 
     class Meta:
-        model = CustomUser
-        fields = ("name", "password", "password2", "email")
+        model = User
+        fields = ("username", "password", "password2", "email")
 
     def validate(self, attrs):
         if attrs["password"] != attrs["password2"]:
@@ -37,9 +38,9 @@ class RegisterUserSerializer(serializers.ModelSerializer):
         return attrs
 
     def create(self, validated_data):
-        user = CustomUser.objects.create(
+        user = User.objects.create(
             email=validated_data["email"],
-            name=validated_data["name"],
+            username=validated_data["username"],
         )
 
         user.set_password(validated_data["password"])

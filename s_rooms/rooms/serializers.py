@@ -1,12 +1,13 @@
 from rest_framework import serializers
 
-from accounts.models import CustomUser
+from django.contrib.auth.models import User
+
 from .models import *
 
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
-        model = CustomUser
+        model = User
         exclude = ["password"]
 
 
