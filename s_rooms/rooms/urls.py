@@ -16,9 +16,7 @@ urlpatterns = [
     ),
     path(
         "create/",
-        CreateRoomView.as_view(
-            queryset=Room.objects.all(), serializer_class=RoomSerializer
-        ),
+        CreateRoomView.as_view(),
         name="room-create",
     )
 ]
