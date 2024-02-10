@@ -32,7 +32,7 @@ class RoomSerializer(serializers.ModelSerializer):
         model = Room
         fields = ["id", "name", "host", "last_message", "messages"]
         depth = 1
-        read_only_fields = ["messages", "last_message"]
+        read_only_fields = ["messages", "last_message", "host"]
 
     def get_last_message(self, obj:Room):
         return MessageSerializer(obj.messages.order_by('created_at').last()).data
