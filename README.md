@@ -1,3 +1,3 @@
 # s-rooms
-A Web Application for devs to join rooms and listen to music together.
-with Spotify API enabled
+A Web Application for users to join and listen to music together.
+Spotify music enabled [x]
