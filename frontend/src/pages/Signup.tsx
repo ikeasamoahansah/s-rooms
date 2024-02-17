@@ -1,23 +1,23 @@
 import {Component} from "react";
 import {Link} from "react-router-dom";
 
-interface User {
+interface UserState {
     email: String;
     username: String;
     password: String;
     password2: String;
 }
 
-class Signup extends Component<User>{
-    constructor(props:any){
-        super(props);
+class Signup extends Component<{}, UserState>{
+    state: UserState = {
+        email: '',
+        username: '',
+        password: '',
+        password2: ''
+    }
 
-        this.state = {
-            email: '',
-            username: '',
-            password: '',
-            password2: ''
-        };
+    constructor(props: {}){
+        super(props);
 
     }
 
@@ -33,7 +33,8 @@ class Signup extends Component<User>{
         const signupData = {
             email: this.state.email,
             username: this.state.username,
-            
+            password: this.state.password,
+            password2: this.state.password2
         }
     }
 }
