@@ -13,11 +13,10 @@ export async function loginUser(username: string, password: string): Promise<str
                 password
             }
         );
-        // const {token} = response.data;
-        // // Store token in local storage
-        // localStorage.setItem('token', token);
-        // return token;
-        console.log(response.data);
+        const {token} = response.data;
+        // Store token in local storage
+        localStorage.setItem('token', token);
+        return token;
         
     } catch (error) {
         console.error('Error logging in', error);
