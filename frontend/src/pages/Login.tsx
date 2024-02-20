@@ -1,7 +1,7 @@
 import React from "react";
 import { loginUser } from "../auth/auth";
 
-export const Login: React.FC = () => {
+function Login() {
     const [username, setUsername] = React.useState('');
     const [password, setPassword] = React.useState('');
     const [error, setError] = React.useState<string | null>('');
@@ -14,7 +14,7 @@ export const Login: React.FC = () => {
         } else {
             setError('Login failed');
         }
-    }
+    };
 
     return (
         <form onSubmit={handleLogin}>
@@ -24,8 +24,7 @@ export const Login: React.FC = () => {
                     type="text"
                     id="username"
                     value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                />
+                    onChange={(e) => setUsername(e.target.value)} />
             </div>
             <div>
                 <label htmlFor="password">Password</label>
@@ -33,11 +32,12 @@ export const Login: React.FC = () => {
                     type="password"
                     id="password"
                     value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                />
+                    onChange={(e) => setPassword(e.target.value)} />
             </div>
             <button type="submit">Login</button>
             {error && <p>{error}</p>}
         </form>
-    )
+    );
 }
+
+export default Login;
