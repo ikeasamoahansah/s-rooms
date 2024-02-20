@@ -23,11 +23,11 @@ class Signup extends React.Component<{}, UserState>{
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    handleChange = (e:any) => {
-        const target = e.target;
+    handleChange = (e: React.FormEvent<HTMLInputElement>) => {
+        const target = e.target as HTMLInputElement;
         const value = target.value;
         const name = target.name;
-        this.setState({ [name]: value } as Pick<UserState, keyof UserState>);
+        this.setState({ [name]: value } as Pick<UserState, any>);
     }
 
     handleSubmit = async (e:any) => {
@@ -42,14 +42,14 @@ class Signup extends React.Component<{}, UserState>{
         }
 
         const csrftoken = Cookies.get('csrftoken');
-        const url = 'http://127.0.0.1:8000/api/auth/register/';
+        const url = 'http://127.0.0.1:8000/accounts/register/';
 
         // Send POST request to Django server
         const response = await fetch(url, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'X-CSRFToken': csrftoken
+                'X-CSRFToken': csrftoken || ''
             },
             body: JSON.stringify(signupData)
         })
