@@ -17,10 +17,10 @@ class MessageSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Message
-        fields = '__all__'
+        fields = "__all__"
         depth = 1
 
-    def get_created_at_formatted(self, obj:Message):
+    def get_created_at_formatted(self, obj: Message):
         return obj.created_at.strftime("%d-%m-%Y %H:%M:%S")
 
 
@@ -34,7 +34,5 @@ class RoomSerializer(serializers.ModelSerializer):
         depth = 1
         read_only_fields = ["messages", "last_message"]
 
-    def get_last_message(self, obj:Room):
-        return MessageSerializer(obj.messages.order_by('created_at').last()).data
-
-
+    def get_last_message(self, obj: Room):
+        return MessageSerializer(obj.messages.order_by("created_at").last()).data

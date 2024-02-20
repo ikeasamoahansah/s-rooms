@@ -13,6 +13,7 @@ from .serializers import *
 
 from django.contrib.auth.models import User
 
+
 @api_view(["GET"])
 def api_root(request, format=None):
     return Response(
@@ -29,13 +30,12 @@ class CreateRoomView(APIView):
         try:
             user = User.objects.get(id=host_id)
         except User.DoesNotExist:
-            return Response({'error': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
-        
+            return Response(
+                {"error": "User not found"}, status=status.HTTP_404_NOT_FOUND
+            )
+
         serializer = RoomSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save(host=user)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-   
-   

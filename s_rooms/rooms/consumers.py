@@ -4,7 +4,10 @@ from django.contrib.auth.models import User
 from channels.db import database_sync_to_async
 from djangochannelsrestframework.generics import GenericAsyncAPIConsumer
 from djangochannelsrestframework.observer import model_observer
-from djangochannelsrestframework.observer.generics import ObserverModelInstanceMixin, action
+from djangochannelsrestframework.observer.generics import (
+    ObserverModelInstanceMixin,
+    action,
+)
 
 from .models import Message, Room
 
@@ -31,14 +34,12 @@ class RoomConsumer(ObserverModelInstanceMixin, GenericAsyncAPIConsumer):
     @action()
     async def leave_room(self, pk, **kwargs):
         await self.remove_user_from_room(pk)
-    
+
     @action()
     async def create_message(self, message, **kwargs):
         room: Room = await self.get_room(pk=self.room_subscribe)
         await database_sync_to_async(Message.objects.create)(
-            room=room,
-            user=self.scope["user"],
-            text=message
+            room=room, user=self.scope["user"], text=message
         )
 
     @action()
@@ -47,11 +48,7 @@ class RoomConsumer(ObserverModelInstanceMixin, GenericAsyncAPIConsumer):
 
     @model_observer(Message)
     async def message_activity(
-        self,
-        message,
-        observer=None,
-        subscribing_request_ids = [],
-        **kwargs
+        self, message, observer=None, subscribing_request_ids=[], **kwargs
     ):
         """
         This is evaluated once for each subscribed consumer.
@@ -65,35 +62,34 @@ class RoomConsumer(ObserverModelInstanceMixin, GenericAsyncAPIConsumer):
 
     @message_activity.groups_for_signal
     def message_activity(self, instance: Message, **kwargs):
-        yield 'room__{instance.room_id}'
-        yield f'pk__{instance.pk}'
+        yield "room__{instance.room_id}"
+        yield f"pk__{instance.pk}"
 
     @message_activity.groups_for_consumer
     def message_activity(self, room=None, **kwargs):
         if room is not None:
-            yield f'room__{room}'
+            yield f"room__{room}"
 
     @message_activity.serializer
-    def message_activity(self, instance:Message, action, **kwargs):
+    def message_activity(self, instance: Message, action, **kwargs):
         """
         This is evaluated before the update is sent
         out to all the subscribing consumers.
         """
-        return dict(data=MessageSerializer(instance).data, action=action.value, pk=instance.pk)
+        return dict(
+            data=MessageSerializer(instance).data, action=action.value, pk=instance.pk
+        )
 
     async def notify_users(self):
         room: Room = await self.get_room(self.room_subscribe)
         for group in self.groups:
             await self.channel_layer.group_send(
                 group,
-                {
-                    'type':'update_users',
-                    'usuarios':await self.current_users(room)
-                }
+                {"type": "update_users", "usuarios": await self.current_users(room)},
             )
 
     async def update_users(self, event: dict):
-        await self.send(text_data=json.dumps({'usuarios': event["usuarios"]}))
+        await self.send(text_data=json.dumps({"usuarios": event["usuarios"]}))
 
     @database_sync_to_async
     def get_room(self, pk: int) -> Room:

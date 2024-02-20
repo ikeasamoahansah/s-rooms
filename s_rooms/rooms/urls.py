@@ -18,5 +18,5 @@ urlpatterns = [
         "create/",
         CreateRoomView.as_view(),
         name="room-create",
-    )
+    ),
 ]

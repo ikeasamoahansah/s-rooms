@@ -12,6 +12,7 @@ from rest_framework.authtoken.views import ObtainAuthToken
 from .serializers import *
 from .permissions import IsOwnerOrReadOnly
 
+
 @api_view(["GET"])
 def api_root(request, format=None):
     return Response(
@@ -25,8 +26,9 @@ def api_root(request, format=None):
 
 class UserList(generics.ListCreateAPIView):
     """
-    List all or create accounts 
+    List all or create accounts
     """
+
     queryset = User.objects.all()
     permission_classes = (IsAdminUser,)
     serializer_class = UserSerializer
@@ -50,7 +52,9 @@ class RegisterUserView(generics.CreateAPIView):
 
 class MyObtainAuthToken(ObtainAuthToken):
     def post(self, request, *args, **kwargs):
-        serializer = self.serializer_class(data=request.data, context={"request": request})
+        serializer = self.serializer_class(
+            data=request.data, context={"request": request}
+        )
         serializer.is_valid(raise_exception=True)
         user = serializer.validated_data["user"]
         token, created = Token.objects.get_or_create(user=user)
@@ -68,4 +72,3 @@ class UserLogoutView(APIView):
     def post(self, request):
         logout(request)
         return Response(status=status.HTTP_200_OK)
-
