@@ -41,3 +41,7 @@ export async function refreshToken(): Promise<string | undefined> {
         return undefined;
     }
 }
+
+export function getToken(): string | null {
+    return localStorage.getItem('token');
+}
