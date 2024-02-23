@@ -1,38 +1,25 @@
-import React, { useEffect, useState } from 'react';
-import { getToken } from '../../context/auth';
-import axios from 'axios';
+import { Link } from "react-router-dom";
 
-const RoomListPage: React.FC = () => {
-    const [rooms, setRooms] = useState([]);
+interface RoomsProps {
+    room: {
+        id: string,
+        name: string
+    }
+}
 
-    useEffect(() => {
-        const fetchRooms = async () => {
-            var token:string | null = getToken();
-            try {
-                const response = await axios.get('http://127.0.0.1:8000/rooms/home/', {
-                    headers: {
-                        Authorization: `Authorization ${token}`,
-                    },
-                });
-                setRooms(response.data);
-                console.log(response.data);
-            } catch(error) {
-                console.log(error);
-            }
-        }
-        fetchRooms();
-    }, []);
+function Rooms(props: RoomsProps) {
 
+    const {room} = props;
+    
     return (
         <div>
-            <h1>Available Rooms</h1>
-            <ul>
-                {rooms.map((room: { id: string, name: string }) => (
-                    <a href={`/rooms/${room.id}/`}><li key={room.id}>{room.name}</li></a>
-                ))}
-            </ul>
+        <ul>
+            <Link to={`${room.id}`}>
+            <li>{room.name}</li>
+            </Link>
+        </ul>
         </div>
     );
-};
+}
 
-export default RoomListPage;
+export default Rooms;

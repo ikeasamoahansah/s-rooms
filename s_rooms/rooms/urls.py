@@ -1,9 +1,9 @@
 from django.urls import path
 from rest_framework.generics import ListAPIView
 
-from .models import *
-from .serializers import *
-from .views import *
+from .models import Room
+from .serializers import RoomSerializer
+from .views import CreateRoomView, RoomDetailView, api_root
 
 urlpatterns = [
     path("", api_root),
@@ -19,4 +19,9 @@ urlpatterns = [
         CreateRoomView.as_view(),
         name="room-create",
     ),
+    path(
+        "<uuid:pk>/",
+        RoomDetailView.as_view(),
+        name="room-detail"
+    )
 ]

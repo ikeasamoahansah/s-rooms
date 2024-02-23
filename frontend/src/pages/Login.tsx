@@ -1,7 +1,9 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { loginUser } from "../context/auth";
 
 function Login() {
+    const history = useNavigate();
     const [username, setUsername] = React.useState('');
     const [password, setPassword] = React.useState('');
     const [error, setError] = React.useState<string | null>('');
@@ -11,6 +13,7 @@ function Login() {
         const token = await loginUser(username, password);
         if (token) {
             console.log('Login successful');
+            history('/rooms');
         } else {
             setError('Login failed');
         }

@@ -9,7 +9,7 @@ from rest_framework import generics
 from rest_framework.permissions import AllowAny, IsAdminUser
 from rest_framework.authtoken.models import Token
 from rest_framework.authtoken.views import ObtainAuthToken
-from .serializers import *
+from .serializers import UserSerializer, RegisterUserSerializer
 from .permissions import IsOwnerOrReadOnly
 
 

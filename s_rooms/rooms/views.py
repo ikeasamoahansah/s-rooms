@@ -1,18 +1,17 @@
 from django.contrib.auth.models import User
+from django.http import Http404
 
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.reverse import reverse
-from rest_framework.permissions import AllowAny, IsAdminUser, IsAuthenticated
-from rest_framework import generics
+from rest_framework.permissions import IsAdminUser, IsAuthenticated
 from rest_framework import status
 from rest_framework.views import APIView
 
-from .models import *
-from .serializers import *
+from accounts.permissions import IsOwnerOrReadOnly
 
-from django.contrib.auth.models import User
-
+from .models import Room
+from .serializers import RoomSerializer
 
 @api_view(["GET"])
 def api_root(request, format=None):
@@ -26,7 +25,7 @@ def api_root(request, format=None):
 
 class CreateRoomView(APIView):
     def post(self, request, format=None):
-        host_id = request.user.id
+        host_id = request.data.get("user")
         try:
             user = User.objects.get(id=host_id)
         except User.DoesNotExist:
@@ -41,3 +40,35 @@ class CreateRoomView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     permission_classes = (IsAuthenticated,)
+
+
+class RoomDetailView(APIView):
+    """
+    Retrieve, Delete, Update a user instance
+    """
+
+    def get_object(self, pk):
+        try:
+            return Room.objects.get(id=pk)
+        except Room.DoesNotExist:
+            raise Http404
+        
+    def get(self, request, pk, format=None):
+        room = self.get_object(pk)
+        serializer = RoomSerializer(room)
+        return Response(serializer.data)
+    
+    def put(self, request, pk, format=None):
+        room = self.get_object(pk)
+        serializer = RoomSerializer(room, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, pk, format=None):
+        room = self.get_object(pk)
+        room.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+    
+    permission_classes = [IsAuthenticated]
