@@ -15,7 +15,7 @@ function RoomDetail(){
             try {
                 const response = await axios.get(url, {
                     headers: {
-                        Authorization: `Authorization ${token}`
+                        Authorization: `token ${token}`
                     }
                 });
                 setRoom(response.data);

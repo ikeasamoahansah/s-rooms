@@ -12,7 +12,7 @@ const RoomListPage: React.FC = () => {
             try {
                 const response = await axios.get('http://127.0.0.1:8000/rooms/home/', {
                     headers: {
-                        Authorization: `Authorization ${token}`,
+                        Authorization: `token ${token}`,
                     },
                 });
                 setRooms(response.data);
