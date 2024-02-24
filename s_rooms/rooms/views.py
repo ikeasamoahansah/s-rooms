@@ -44,7 +44,7 @@ class CreateRoomView(APIView):
 
 class RoomDetailView(APIView):
     """
-    Retrieve, Delete, Update a user instance
+    Retrieve, Delete, Update a room instance
     """
 
     def get_object(self, pk):
