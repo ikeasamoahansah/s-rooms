@@ -1,7 +1,14 @@
 import axios, {AxiosResponse} from 'axios';
+import "core-js/stable/atob";
+import { JwtPayload, jwtDecode } from 'jwt-decode';
 
 interface LoginResponse {
     token: string;
+}
+
+interface User {
+    username: string;
+    id: number;
 }
 
 export async function loginUser(username: string, password: string): Promise<string | undefined> {
@@ -44,4 +51,24 @@ export async function refreshToken(): Promise<string | undefined> {
 
 export function getToken(): string | null {
     return localStorage.getItem('token');
+}
+
+export async function getUser(): Promise<User | undefined> {
+    try {
+        const token = getToken();
+        if (!token) throw new Error('You must be logged in!');
+        const decoded = jwtDecode<JwtPayload>(token);
+        const response: AxiosResponse<User> = await axios.get(
+            `http://127.0.0.1:8000/accounts/user/${decoded.id}/`,
+            {
+                headers: {
+                    Authorization: `token ${token}`
+                }
+            }
+        );
+        return response.data;
+    } catch (error) {
+        console.error('Error getting user', error);
+        return undefined;
+    }
 }

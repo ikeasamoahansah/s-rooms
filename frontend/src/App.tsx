@@ -3,6 +3,7 @@ import Login from './pages/Login';
 import Signup from './pages/Signup';
 import HomePage from './pages/HomePage';
 import RoomDetail from './pages/RoomDetail';
+import CreateRoom from './pages/CreateRoom';
 
 
 function App() {
@@ -13,6 +14,7 @@ function App() {
       <Login/>
       <HomePage/>
       <RoomDetail/>
+      <CreateRoom/>
     </>
   )
 }
