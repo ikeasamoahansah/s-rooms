@@ -58,6 +58,8 @@ export async function getUser(): Promise<User | undefined> {
         const token = getToken();
         if (!token) throw new Error('You must be logged in!');
         const decoded = jwtDecode<JwtPayload>(token);
+        console.log(decoded);
+        
         const response: AxiosResponse<User> = await axios.get(
             `http://127.0.0.1:8000/accounts/user/${decoded.id}/`,
             {
@@ -66,6 +68,8 @@ export async function getUser(): Promise<User | undefined> {
                 }
             }
         );
+        console.log(response.data);
+        
         return response.data;
     } catch (error) {
         console.error('Error getting user', error);

@@ -5,7 +5,7 @@ import { getToken, getUser } from "../context/auth";
 
 interface data {
   name: string;
-  host: string;
+  user: number;
 }
 
 const CreateRoom: React.FC = () => {
@@ -20,7 +20,7 @@ const CreateRoom: React.FC = () => {
 
     const postData: object = {
       name: name,
-      host: (await getUser())?.id
+      user: (await getUser())?.id
     };
 
     try {

@@ -61,7 +61,7 @@ class MyObtainAuthToken(ObtainAuthToken):
         return Response(
             {
                 "token": token.key,
-                "id": user.pk,
+                "id": user.id,
                 "username": user.username,
                 "email": user.email,
             }
