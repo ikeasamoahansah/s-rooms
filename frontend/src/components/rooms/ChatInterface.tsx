@@ -3,68 +3,49 @@ import axios from "axios";
 import { getToken, getUser } from "../../context/auth";
 
 interface Message {
-    sender: number;
-    content: string;
-    timestamp: Date;
+    room: number;
+    user: number;
+    text: string;
+    created_at: Date;
 }
 
 interface ChatInterfaceProps {
-    groupId: number;
+    messages: Message[];
+    roomId: any;
 }
 
-interface ChatInterfaceState {
-    messages: Message[];
+interface ChatState {
     newMessage: string;
 }
 
-class ChatInterface extends React.Component<ChatInterfaceProps, ChatInterfaceState> {
+class ChatInterface extends React.Component<ChatInterfaceProps, ChatState> {
     constructor(props: ChatInterfaceProps) {
         super(props);
         this.state = {
-            messages: [],
-            newMessage: "",
-        };
-        this.fetchMessages(props.groupId);
-    }
-
-    fetchMessages = async (roomId:number) => {
-        const response = await axios.get(`http://127.0.0.1:8000/rooms/${roomId}`, {
-            headers: {
-                Authorization: `token ${getToken()}`
-            }
-        })
-        this.setState({ messages: response.data.messages });
-    }
-
-    componentDidMount() {
-        // Fetch messages from the server or initialize with some default messages
-        // Example: this.fetchMessages();
+            newMessage: ""
+        }
     }
 
     // Function to send a new message
     sendMessage = () => {
-        const { newMessage } = this.state;
-        const { groupId } = this.props;
+        const {roomId} = this.props;
+        const {newMessage} = this.state;
 
         // Create a new message object
         const message: Message = {
-            sender: getUser(), // Replace with the actual sender's name
-            content: newMessage,
-            timestamp: new Date(),
+            room: roomId,
+            user: getUser(), // Replace with the actual sender's name
+            text: newMessage,
+            created_at: new Date(),
         };
 
         // Send the message to the server or update the local state
         // Example: this.sendMessageToServer(message);
-        axios.post("/rooms", message)
-            .then(response => {
-            // Handle the response from the server
-            })
-            .catch(error => {
-            // Handle any errors that occur during the request
-            });
-
-        // Clear the input field
-        this.setState({ newMessage: "" });
+        axios.post("/rooms", message, {
+            headers: {
+                'Authorization': `token ${getToken()}`
+            }
+        })
     };
 
     // Function to handle input change
@@ -73,14 +54,16 @@ class ChatInterface extends React.Component<ChatInterfaceProps, ChatInterfaceSta
     };
 
     render() {
-        const { messages, newMessage } = this.state;
+
+        const {messages} = this.props;
+        const {newMessage} = this.state;
 
         return (
             <div className="flex flex-col h-screen">
                 <div className="flex-1 p-4 overflow-v-auto">
                     {messages.map((message, index) => (
                         <div key={index}>
-                            <strong>{message.sender}</strong>: {message.content}
+                            <strong>{message.user}</strong>: {message.text}
                         </div>
                     ))}
                 </div>

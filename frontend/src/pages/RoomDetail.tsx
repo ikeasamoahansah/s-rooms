@@ -19,6 +19,7 @@ function RoomDetail(){
                         Authorization: `token ${token}`
                     }
                 });
+                console.log(response.data);
                 setRoom(response.data);
             } catch (error) {
                 console.error(error);
@@ -30,7 +31,7 @@ function RoomDetail(){
     return (
         <div>
             <h1>{room.name}</h1>
-            <ChatInterface groupId={room.id}/>
+            <ChatInterface messages={room.messages} roomId={room.id}/>
         </div>
     )
 }
