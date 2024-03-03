@@ -20,26 +20,30 @@ function Login() {
     };
 
     return (
-        <form onSubmit={handleLogin}>
-            <div>
-                <label htmlFor="username">Username</label>
-                <input
-                    type="text"
-                    id="username"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)} />
-            </div>
-            <div>
-                <label htmlFor="password">Password</label>
-                <input
-                    type="password"
-                    id="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)} />
-            </div>
-            <button type="submit">Login</button>
-            {error && <p>{error}</p>}
-        </form>
+        <div className="flex justify-center items-center h-screen">
+            <form onSubmit={handleLogin} className="flex flex-col items-center">
+                <div className="mb-4">
+                    <label htmlFor="username" className="mr-2">Username:</label>
+                    <input
+                        type="text"
+                        id="username"
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
+                        className="border border-gray-300 rounded px-2 py-1" />
+                </div>
+                <div className="mb-4">
+                    <label htmlFor="password" className="mr-2">Password:</label>
+                    <input
+                        type="password"
+                        id="password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        className="border border-gray-300 rounded px-2 py-1" />
+                </div>
+                <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded">Login</button>
+                {error && <p className="text-red-500">{error}</p>}
+            </form>
+        </div>
     );
 }
 

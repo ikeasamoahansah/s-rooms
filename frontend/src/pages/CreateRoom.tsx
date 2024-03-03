@@ -39,18 +39,23 @@ const CreateRoom: React.FC = () => {
   }
 
   return (
-    <form onSubmit={handleCreateRoom}>
-      <div>
-        <label htmlFor="name">Room Name</label>
-        <input
-          type="text"
-          id="name"
-          value={name}
-          onChange={(e) => setName(e.target.value)} />
-      </div>
-      <button type="submit">Create Room</button>
-      {error && <p>{error}</p>}
-    </form>
+    <div className="bg-white shadow-md rounded-lg p-6">
+      <h2 className="text-2xl font-bold mb-4">Create Room</h2>
+      <form onSubmit={handleCreateRoom}>
+        <div className="mb-4">
+          <label htmlFor="name" className="block text-gray-700">Room Name</label>
+          <input
+            type="text"
+            id="name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            className="border border-gray-300 rounded-md px-3 py-2 mt-1 w-full"
+          />
+        </div>
+        <button type="submit" className="bg-blue-500 text-white py-2 px-4 rounded-md">Create Room</button>
+        {error && <p className="text-red-500 mt-2">{error}</p>}
+      </form>
+    </div>
   );
     
 };

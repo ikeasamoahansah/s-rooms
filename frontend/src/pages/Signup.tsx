@@ -63,31 +63,59 @@ class Signup extends React.Component<{}, UserState>{
     }   
     
     render(){
-        return(
-            <div>
-                <h1>Sign Up</h1>
-                <form onSubmit={this.handleSubmit}>
-                    <div>
-                        <label>Email:</label>
-                        <input type="email" name="email" onChange={this.handleChange} />
+        return (
+            <div className="flex justify-center items-center h-screen">
+                <form onSubmit={this.handleSubmit} className="flex flex-col items-center">
+                    <div className="mb-4">
+                        <label htmlFor="email" className="mr-2">
+                            Email
+                        </label>
+                        <input
+                            type="email"
+                            name="email"
+                            onChange={this.handleChange}
+                            className="border border-gray-300 rounded px-2 py-1"
+                        />
                     </div>
-                    <div>
+                    <div className="mb-4">
                         <label>Username:</label>
-                        <input type="text" name="username" onChange={this.handleChange} />
+                        <input
+                            type="text"
+                            name="username"
+                            onChange={this.handleChange}
+                            className="border border-gray-300 rounded px-2 py-1"
+                        />
                     </div>
-                    <div>
+                    <div className="mb-4">
                         <label>Password:</label>
-                        <input type="password" name="password" onChange={this.handleChange} />
+                        <input
+                            type="password"
+                            name="password"
+                            onChange={this.handleChange}
+                            className="border border-gray-300 rounded px-2 py-1"
+                        />
                     </div>
-                    <div>
+                    <div className="mb-4">
                         <label>Confirm Password:</label>
-                        <input type="password" name="password2" onChange={this.handleChange} />
+                        <input
+                            type="password"
+                            name="password2"
+                            onChange={this.handleChange}
+                            className="border border-gray-300 rounded px-2 py-1"
+                        />
                     </div>
-                    <button type="submit">Sign Up</button>
+                    <button
+                        type="submit"
+                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                    >
+                        Sign Up
+                    </button>
+                <p>
+                    Already have an account? <Link to="/login">Login</Link>
+                </p>
                 </form>
-                <p>Already have an account? <Link to="/login">Login</Link></p>
             </div>
-        )
+        );
     }
 
 }

@@ -25,13 +25,17 @@ const RoomListPage: React.FC = () => {
     }, []);
 
     return (
-        <div>
-            <h1>Available Rooms</h1>
-            <ul>
-                {rooms.map((room: { id: string, name: string }, index: number) => (
-                    <Rooms key={index} room={room}/>
-                ))}
-            </ul>
+        <div className="text-center">
+            <h1 className="text-2xl font-bold mb-4">Available Rooms</h1>
+            <div className="mx-auto max-w-md">
+                <ul className="grid grid-cols-1 gap-4">
+                    {rooms.map((room: { id: string, name: string }, index: number) => (
+                        <div key={index} className="bg-gray-200 p-4 rounded-lg">
+                            <Rooms room={room}/>
+                        </div>
+                    ))}
+                </ul>
+            </div>
         </div>
     );
 };
