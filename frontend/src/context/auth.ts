@@ -1,6 +1,4 @@
 import axios, {AxiosResponse} from 'axios';
-import "core-js/stable/atob";
-import { JwtPayload, jwtDecode } from 'jwt-decode';
 
 interface LoginResponse {
     token: string;
@@ -24,6 +22,18 @@ export async function loginUser(username: string, password: string): Promise<str
     } catch (error) {
         console.error('Error logging in', error);
         return undefined;
+    }
+}
+
+export async function logoutUser(): Promise<void> {
+    try {
+        await axios.post('http://127.0.0.1:8000/accounts/logout/');
+        // Remove token from local storage
+        localStorage.removeItem('token');
+        localStorage.removeItem('userId');
+        // Perform any additional logout logic here
+    } catch (error) {
+        console.error('Error logging out', error);
     }
 }
 
