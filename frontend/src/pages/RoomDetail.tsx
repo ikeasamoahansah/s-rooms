@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import { getToken } from '../context/auth';
+import ChatInterface from '../components/rooms/ChatInterface';
 
 function RoomDetail(){
     const [room, setRoom] = React.useState({} as any);
@@ -29,6 +30,7 @@ function RoomDetail(){
     return (
         <div>
             <h1>{room.name}</h1>
+            <ChatInterface groupId={room.id}/>
         </div>
     )
 }

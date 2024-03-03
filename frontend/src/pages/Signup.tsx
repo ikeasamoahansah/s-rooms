@@ -68,7 +68,7 @@ class Signup extends React.Component<{}, UserState>{
                 <form onSubmit={this.handleSubmit} className="flex flex-col items-center">
                     <div className="mb-4">
                         <label htmlFor="email" className="mr-2">
-                            Email
+                            Email:
                         </label>
                         <input
                             type="email"
@@ -87,7 +87,7 @@ class Signup extends React.Component<{}, UserState>{
                         />
                     </div>
                     <div className="mb-4">
-                        <label>Password:</label>
+                        <label className="mr-2">Password:</label>
                         <input
                             type="password"
                             name="password"
@@ -96,7 +96,7 @@ class Signup extends React.Component<{}, UserState>{
                         />
                     </div>
                     <div className="mb-4">
-                        <label>Confirm Password:</label>
+                        <label className="mr-2">Confirm Password:</label>
                         <input
                             type="password"
                             name="password2"
