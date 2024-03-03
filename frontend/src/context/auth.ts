@@ -6,23 +6,19 @@ interface LoginResponse {
     token: string;
 }
 
-interface User {
-    username: string;
-    id: number;
-}
-
 export async function loginUser(username: string, password: string): Promise<string | undefined> {
     try {
-        const response: AxiosResponse<LoginResponse> = await axios.post(
+        const response: AxiosResponse<LoginResponse & { id: number }> = await axios.post(
             'http://127.0.0.1:8000/accounts/login/',
             {
                 username,
                 password
             }
         );
-        const {token} = response.data;
+        const {token, id} = response.data;
         // Store token in local storage
         localStorage.setItem('token', token);
+        localStorage.setItem('userId', id.toString()); // Convert id to string
         return token;
         
     } catch (error) {
@@ -53,26 +49,8 @@ export function getToken(): string | null {
     return localStorage.getItem('token');
 }
 
-export async function getUser(): Promise<User | undefined> {
-    try {
-        const token = getToken();
-        if (!token) throw new Error('You must be logged in!');
-        const decoded = jwtDecode<JwtPayload>(token);
-        console.log(decoded);
-        
-        const response: AxiosResponse<User> = await axios.get(
-            `http://127.0.0.1:8000/accounts/user/${decoded.id}/`,
-            {
-                headers: {
-                    Authorization: `token ${token}`
-                }
-            }
-        );
-        console.log(response.data);
-        
-        return response.data;
-    } catch (error) {
-        console.error('Error getting user', error);
-        return undefined;
-    }
+export function getUser(): number {
+    const userId = localStorage.getItem('userId');
+    if (!userId) throw new Error('No user id stored');
+    return Number(userId);
 }

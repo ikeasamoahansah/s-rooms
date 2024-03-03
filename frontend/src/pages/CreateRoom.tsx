@@ -20,7 +20,7 @@ const CreateRoom: React.FC = () => {
 
     const postData: object = {
       name: name,
-      user: (await getUser())?.id
+      user:getUser()
     };
 
     try {
