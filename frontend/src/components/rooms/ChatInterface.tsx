@@ -67,7 +67,7 @@ class ChatInterface extends React.Component<ChatInterfaceProps, ChatState> {
                         </div>
                     ))}
                 </div>
-                <div className="flex items-center p-4">
+                <div className="flex items-center p-4 ">
                     <input type="text" value={newMessage} onChange={this.handleInputChange} />
                     <button onClick={this.sendMessage} className="bg-blue-500 text-white p-2 rounded-r-lg ml-2">Send</button>
                 </div>
