@@ -41,7 +41,7 @@ class ChatInterface extends React.Component<ChatInterfaceProps, ChatState> {
 
         // Send the message to the server or update the local state
         // Example: this.sendMessageToServer(message);
-        axios.post("/rooms", message, {
+        axios.post("http://127.0.0.1:8000/rooms", message, {
             headers: {
                 'Authorization': `token ${getToken()}`
             }
@@ -55,13 +55,13 @@ class ChatInterface extends React.Component<ChatInterfaceProps, ChatState> {
 
     render() {
 
-        const {messages} = this.props;
+        const messages = this.props.messages;
         const {newMessage} = this.state;
 
         return (
             <div className="flex flex-col h-screen">
                 <div className="flex-1 p-4 overflow-v-auto">
-                    {messages.map((message, index) => (
+                    {messages.map((message, index: number) => (
                         <div key={index}>
                             <strong>{message.user}</strong>: {message.text}
                         </div>

@@ -20,6 +20,7 @@ function RoomDetail(){
                     }
                 });
                 console.log(response.data);
+                
                 setRoom(response.data);
             } catch (error) {
                 console.error(error);
@@ -31,7 +32,7 @@ function RoomDetail(){
     return (
         <div>
             <h1>{room.name}</h1>
-            <ChatInterface messages={room.messages} roomId={room.id}/>
+            {room.messages && <ChatInterface messages={room.messages} roomId={room.id}/>}
         </div>
     )
 }
