@@ -18,7 +18,9 @@ function RoomDetail(){
                     headers: {
                         Authorization: `token ${token}`
                     }
-                });                
+                });
+                console.log(response.data);
+                                
                 setRoom(response.data);
             } catch (error) {
                 console.error(error);
