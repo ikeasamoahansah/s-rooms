@@ -63,7 +63,7 @@ class ChatInterface extends React.Component<ChatInterfaceProps, ChatState> {
                 <div className="flex-1 p-4 overflow-v-auto">
                     {messages.map((message, index: number) => (
                         <div key={index}>
-                            <strong>{message.user}</strong>: {message.text}
+                            <strong>{message.user.username}</strong>: {message.text}
                         </div>
                     ))}
                 </div>

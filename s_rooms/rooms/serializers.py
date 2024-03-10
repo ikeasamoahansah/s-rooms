@@ -8,7 +8,7 @@ from .models import *
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        exclude = ["password"]
+        fields = ["id", "username", "email"]
 
 
 class MessageSerializer(serializers.ModelSerializer):
@@ -17,7 +17,7 @@ class MessageSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Message
-        fields = "__all__"
+        fields = ["id", "text", "created_at", "created_at_formatted", "user"]
         depth = 1
 
     def get_created_at_formatted(self, obj: Message):
