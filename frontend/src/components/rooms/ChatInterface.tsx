@@ -41,7 +41,7 @@ class ChatInterface extends React.Component<ChatInterfaceProps, ChatState> {
 
         // Send the message to the server or update the local state
         // Example: this.sendMessageToServer(message);
-        axios.post("http://127.0.0.1:8000/rooms", message, {
+        axios.post(`http://127.0.0.1:8000/rooms/${roomId}/messages/`, message, {
             headers: {
                 'Authorization': `token ${getToken()}`
             }
