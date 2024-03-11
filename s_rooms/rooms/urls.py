@@ -27,6 +27,6 @@ urlpatterns = [
     path(
         "<uuid:pk>/messages/",
         CreateMessageView.as_view(),
-        name="message-detail"
+        name="messages-detail"
     )
 ]
