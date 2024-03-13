@@ -96,3 +96,6 @@ class CreateMessageView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
     permission_classes = (IsAuthenticated,)
+
+
+# class MessgaeView
