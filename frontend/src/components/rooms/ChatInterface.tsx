@@ -3,7 +3,6 @@ import axios from "axios";
 import { getToken, getUser } from "../../context/auth";
 
 interface Message {
-    room: number;
     user: number;
     text: string;
     created_at: Date;
@@ -33,7 +32,6 @@ class ChatInterface extends React.Component<ChatInterfaceProps, ChatState> {
 
         // Create a new message object
         const message: Message = {
-            room: roomId,
             user: getUser(), // Replace with the actual sender's name
             text: newMessage,
             created_at: new Date(),

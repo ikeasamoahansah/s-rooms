@@ -80,7 +80,8 @@ class CreateMessageView(APIView):
         except Room.DoesNotExist:
             raise Http404
         
-    def post(self, request, format=None):
+    def post(self, request, pk, format=None):
+        room = self.get_object(pk)
         host_id = request.data.get("user")
         try:
             user = User.objects.get(id=host_id)
@@ -91,7 +92,7 @@ class CreateMessageView(APIView):
         
         serializer = MessageSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save(user=user, room=self.get_object(request.data.get("room")))
+            serializer.save(user=user, room=room)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
