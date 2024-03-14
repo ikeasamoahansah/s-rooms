@@ -17,7 +17,7 @@ class MessageSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Message
-        fields = ["id", "text", "created_at", "created_at_formatted", "user"]
+        fields = ["id", "text", "created_at", "created_at_formatted", "user", "room"]
         depth = 1
 
     def get_created_at_formatted(self, obj: Message):
