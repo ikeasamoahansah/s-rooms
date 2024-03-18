@@ -77,12 +77,13 @@ class CreateMessageView(APIView):
     def get_object(self, pk):
         try:
             return Room.objects.get(id=pk)
-        except Room.DoesNotExist:
-            raise Http404
+        except Room.DoesNotExist as exc:
+            raise Http404 from exc
         
     def post(self, request, pk, format=None):
-        room = self.get_object(pk)
+        room_id = request.data.get("room")
         host_id = request.data.get("user")
+        room = self.get_object(room_id)
         try:
             user = User.objects.get(id=host_id)
         except User.DoesNotExist:
@@ -90,9 +91,9 @@ class CreateMessageView(APIView):
                 {"error": "User not found"}, status=status.HTTP_404_NOT_FOUND
             )
         
-        serializer = MessageSerializer(data=request.data)
+        serializer = MessageSerializer(user, data=request.data)
         if serializer.is_valid():
-            serializer.save(user=user, room=room)
+            serializer.save(room=room)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     

@@ -3,7 +3,7 @@ import axios from "axios";
 import { getToken, getUser } from "../../context/auth";
 
 interface Message {
-    room: number;
+    room: string;
     user: number;
     text: string;
     created_at: Date;
