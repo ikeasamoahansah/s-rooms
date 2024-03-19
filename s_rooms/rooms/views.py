@@ -13,6 +13,7 @@ from accounts.permissions import IsOwnerOrReadOnly
 from .models import Room
 from .serializers import RoomSerializer, MessageSerializer
 
+
 @api_view(["GET"])
 def api_root(request, format=None):
     return Response(
@@ -52,12 +53,12 @@ class RoomDetailView(APIView):
             return Room.objects.get(id=pk)
         except Room.DoesNotExist:
             raise Http404
-        
+
     def get(self, request, pk, format=None):
         room = self.get_object(pk)
         serializer = RoomSerializer(room)
         return Response(serializer.data)
-    
+
     def put(self, request, pk, format=None):
         room = self.get_object(pk)
         serializer = RoomSerializer(room, data=request.data)
@@ -70,8 +71,9 @@ class RoomDetailView(APIView):
         room = self.get_object(pk)
         room.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
-    
+
     permission_classes = [IsAuthenticated]
+
 
 class CreateMessageView(APIView):
     def get_object(self, pk):
@@ -79,7 +81,7 @@ class CreateMessageView(APIView):
             return Room.objects.get(id=pk)
         except Room.DoesNotExist as exc:
             raise Http404 from exc
-        
+
     def post(self, request, pk, format=None):
         room_id = request.data.get("room")
         host_id = request.data.get("user")
@@ -90,13 +92,13 @@ class CreateMessageView(APIView):
             return Response(
                 {"error": "User not found"}, status=status.HTTP_404_NOT_FOUND
             )
-        
+
         serializer = MessageSerializer(user, data=request.data)
         if serializer.is_valid():
             serializer.save(room=room)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
+
     permission_classes = (IsAuthenticated,)
 
 

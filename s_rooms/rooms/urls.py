@@ -19,14 +19,6 @@ urlpatterns = [
         CreateRoomView.as_view(),
         name="room-create",
     ),
-    path(
-        "<uuid:pk>/",
-        RoomDetailView.as_view(),
-        name="room-detail"
-    ),
-    path(
-        "<uuid:pk>/messages/",
-        CreateMessageView.as_view(),
-        name="messages-detail"
-    )
+    path("<uuid:pk>/", RoomDetailView.as_view(), name="room-detail"),
+    path("<uuid:pk>/messages/", CreateMessageView.as_view(), name="messages-detail"),
 ]
