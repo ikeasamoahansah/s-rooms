@@ -38,7 +38,7 @@ function Login() {
                         id="password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
-                        className="border border-gray-300 rounded px-2 py-1" />
+                        className="border border-gray-200 rounded px-2 py-1" />
                 </div>
                 <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded">Login</button>
                 {error && <p className="text-red-500">{error}</p>}
