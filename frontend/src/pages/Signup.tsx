@@ -104,16 +104,16 @@ class Signup extends React.Component<{}, UserState>{
                             className="border border-gray-300 rounded px-2 py-1"
                         />
                     </div>
-                    <button
-                        type="submit"
-                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                    >
-                        Sign Up
-                    </button>
+                </form>
+                <button
+                    type="submit"
+                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                >
+                    Sign Up
+                </button>
                 <p>
                     Already have an account? <Link to="/login">Login</Link>
                 </p>
-                </form>
             </div>
         );
     }
