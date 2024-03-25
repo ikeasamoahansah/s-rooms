@@ -74,7 +74,7 @@ class Signup extends React.Component<{}, UserState>{
                             type="email"
                             name="email"
                             onChange={this.handleChange}
-                            className="border border-gray-300 rounded px-2 py-1"
+                            className="border border-gray-300 rounded px-2 py-2"
                         />
                     </div>
                     <div className="mb-4">
