@@ -78,7 +78,9 @@ class Signup extends React.Component<{}, UserState>{
                         />
                     </div>
                     <div className="mb-4">
-                        <label>Username:</label>
+                        <label htmlFor="username" className="mr-2">
+                            Username:
+                        </label>
                         <input
                             type="text"
                             name="username"
