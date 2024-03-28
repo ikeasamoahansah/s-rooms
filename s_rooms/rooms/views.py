@@ -11,7 +11,7 @@ from rest_framework.views import APIView
 from accounts.permissions import IsOwnerOrReadOnly
 
 from .models import Room
-from .serializers import RoomSerializer, MessageSerializer
+from .serializers import RoomSerializer
 
 
 @api_view(["GET"])
@@ -74,32 +74,3 @@ class RoomDetailView(APIView):
 
     permission_classes = [IsAuthenticated]
 
-
-class CreateMessageView(APIView):
-    def get_object(self, pk):
-        try:
-            return Room.objects.get(id=pk)
-        except Room.DoesNotExist as exc:
-            raise Http404 from exc
-
-    def post(self, request, pk, format=None):
-        room_id = request.data.get("room")
-        host_id = request.data.get("user")
-        room = self.get_object(room_id)
-        try:
-            user = User.objects.get(id=host_id)
-        except User.DoesNotExist:
-            return Response(
-                {"error": "User not found"}, status=status.HTTP_404_NOT_FOUND
-            )
-
-        serializer = MessageSerializer(user, data=request.data)
-        if serializer.is_valid():
-            serializer.save(room=room)
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    permission_classes = (IsAuthenticated,)
-
-
-# class MessgaeView
