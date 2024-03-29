@@ -73,4 +73,3 @@ class RoomDetailView(APIView):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
     permission_classes = [IsAuthenticated]
-
