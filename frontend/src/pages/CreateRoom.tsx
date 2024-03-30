@@ -1,7 +1,8 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import axios, {AxiosResponse} from "axios";
-import { getToken, getUser } from "../context/auth";
+import {AxiosResponse} from "axios";
+import api from "../api";
+import { getUser } from "../context/auth";
 
 interface data {
   name: string;
@@ -15,8 +16,7 @@ const CreateRoom: React.FC = () => {
 
   const handleCreateRoom = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    var token:string | null = getToken();
-    const url = 'http://127.0.0.1:8000/rooms/create/';
+    const url = '/api/rooms/create/';
 
     const postData: object = {
       name: name,
@@ -24,11 +24,7 @@ const CreateRoom: React.FC = () => {
     };
 
     try {
-      const response: AxiosResponse<data> = await axios.post(url, postData, {
-        headers: {
-          Authorization: `token ${token}`
-        }
-      });
+      const response: AxiosResponse<data> = await api.post(url, postData, {});
       console.log(response.data);
       history('/rooms');
     } catch (error) {

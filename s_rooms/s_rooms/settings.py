@@ -23,9 +23,9 @@ CORS_ALLOW_ALL_ORIGINS = True
 
 INSTALLED_APPS = [
     "rest_framework",
+    "rest_framework_simplejwt",
     "accounts",
     "rooms",
-    "rest_framework.authtoken",
     "corsheaders",
     # 'djangochannelsrestframework',
     "django.contrib.admin",
@@ -36,11 +36,11 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
 ]
 
-REST_FRAMEWORK = {
-    "DEFAULT_AUTHENTICATION_CLASSES": [
-        "rest_framework.authentication.TokenAuthentication",
-    ]
-}
+# REST_FRAMEWORK = {
+#     "DEFAULT_AUTHENTICATION_CLASSES": [
+#         "rest_framework.authentication.TokenAuthentication",
+#     ]
+# }
 
 # AUTH_USER_MODEL = "accounts.CustomUser"
 

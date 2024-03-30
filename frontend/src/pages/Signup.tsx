@@ -1,5 +1,6 @@
 import React from "react";
 import {Link} from "react-router-dom";
+import api from "../api";
 import Cookies from 'js-cookie';
 
 type UserState = {
@@ -42,16 +43,14 @@ class Signup extends React.Component<{}, UserState>{
         }
 
         const csrftoken = Cookies.get('csrftoken');
-        const url = 'http://127.0.0.1:8000/accounts/register/';
+        const url = '/api/accounts/register/';
 
         // Send POST request to Django server
-        const response = await fetch(url, {
-            method: 'POST',
+        const response = await api.post(url, signupData, {
             headers: {
                 'Content-Type': 'application/json',
                 'X-CSRFToken': csrftoken || ''
             },
-            body: JSON.stringify(signupData)
         })
 
         // Get response from server

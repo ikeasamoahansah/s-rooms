@@ -1,8 +1,6 @@
 import React from 'react';
-import axios from 'axios';
+import api from '../api';
 import { useParams } from 'react-router-dom';
-import { getToken } from '../context/auth';
-import ChatInterface from '../components/rooms/ChatInterface';
 
 function RoomDetail(){
     const [room, setRoom] = React.useState({} as any);
@@ -11,16 +9,10 @@ function RoomDetail(){
     React.useEffect(() => {
         
         async function fetchRoom() {
-            var token:string | null = getToken();
-            const url = `http://127.0.0.1:8000/rooms/${id}`;
+            const url = `api/rooms/${id}`;
             try {
-                const response = await axios.get(url, {
-                    headers: {
-                        Authorization: `token ${token}`
-                    }
-                });
-                console.log(response.data);
-                             
+                const response = await api.get(url, {});
+                console.log(response.data);         
                 setRoom(response.data);
             } catch (error) {
                 console.error(error);
@@ -32,7 +24,7 @@ function RoomDetail(){
     return (
         <div>
             <h1>{room.name}</h1>
-            {room.messages && <ChatInterface messages={room.messages} roomId={room.id}/>}
+            {/* {room.messages && <ChatInterface messages={room.messages} roomId={room.id}/>} */}
         </div>
     )
 }

@@ -7,8 +7,6 @@ from rest_framework.reverse import reverse
 from rest_framework.views import APIView
 from rest_framework import generics
 from rest_framework.permissions import AllowAny, IsAdminUser
-from rest_framework.authtoken.models import Token
-from rest_framework.authtoken.views import ObtainAuthToken
 from .serializers import UserSerializer, RegisterUserSerializer
 from .permissions import IsOwnerOrReadOnly
 
@@ -19,7 +17,6 @@ def api_root(request, format=None):
         {
             "accounts": reverse("account-view", request=request, format=format),
             "user_register": reverse("auth-register", request=request, format=format),
-            "user_login": reverse("auth-login", request=request, format=format),
         }
     )
 
@@ -48,24 +45,6 @@ class RegisterUserView(generics.CreateAPIView):
     queryset = User.objects.all()
     permission_classes = (AllowAny,)
     serializer_class = RegisterUserSerializer
-
-
-class MyObtainAuthToken(ObtainAuthToken):
-    def post(self, request, *args, **kwargs):
-        serializer = self.serializer_class(
-            data=request.data, context={"request": request}
-        )
-        serializer.is_valid(raise_exception=True)
-        user = serializer.validated_data["user"]
-        token, created = Token.objects.get_or_create(user=user)
-        return Response(
-            {
-                "token": token.key,
-                "id": user.id,
-                "username": user.username,
-                "email": user.email,
-            }
-        )
 
 
 class UserLogoutView(APIView):

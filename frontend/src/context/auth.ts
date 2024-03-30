@@ -1,62 +1,62 @@
 import axios, {AxiosResponse} from 'axios';
+import api from '../api';
+import {ACCESS_TOKEN, REFRESH_TOKEN} from '../constants';
 
 interface LoginResponse {
     token: string;
 }
 
-export async function loginUser(username: string, password: string): Promise<string | undefined> {
+export async function loginUser(route: string, username: string, password: string): Promise<string | undefined> {
     try {
-        const response: AxiosResponse<LoginResponse & { id: number }> = await axios.post(
-            'http://127.0.0.1:8000/accounts/login/',
+        const response: AxiosResponse<LoginResponse & { access: string, refresh: string }> = await api.post(
+            route,
             {
                 username,
                 password
             }
         );
-        const {token, id} = response.data;
         // Store token in local storage
-        localStorage.setItem('token', token);
-        localStorage.setItem('userId', id.toString()); // Convert id to string
-        return token;
+        localStorage.setItem(ACCESS_TOKEN, response.data.access);
+        localStorage.setItem(REFRESH_TOKEN, response.data.refresh);
+        return ACCESS_TOKEN;
         
     } catch (error) {
-        console.error('Error logging in', error);
+        alert(error);
         return undefined;
     }
 }
 
 export async function logoutUser(): Promise<void> {
     try {
-        await axios.post('http://127.0.0.1:8000/accounts/logout/');
+        await axios.post('/api/accounts/logout/');
         // Remove token from local storage
-        localStorage.removeItem('token');
-        localStorage.removeItem('userId');
+        localStorage.clear();
         // Perform any additional logout logic here
     } catch (error) {
-        console.error('Error logging out', error);
+        alert(error);
     }
 }
 
-export async function refreshToken(): Promise<string | undefined> {
+export async function refreshToken(route: string): Promise<string | undefined> {
     try {
-        const token = localStorage.getItem('token');
+        const token = localStorage.getItem(REFRESH_TOKEN);
         if (!token) throw new Error('No token stored');
-        const response: AxiosResponse<LoginResponse> = await axios.post(
-            'http://127.0.0.1/accounts/token-refresh/',
+        const response: AxiosResponse<LoginResponse & { access: string }> = await api.post(
+            route,
             {token}
         );
-        const newToken = response.data.token;
+        const newToken = response.data.access;
         // Store token in local storage
-        localStorage.setItem('token', newToken);
+        localStorage.setItem(ACCESS_TOKEN, newToken);
         return newToken;
     }catch(error){
-        console.error('Error refreshing token', error);
+        alert('Error occured!');
         return undefined;
     }
 }
 
 export function getToken(): string | null {
-    return localStorage.getItem('token');
+    return localStorage.getItem(ACCESS_TOKEN);
 }
 
 export function getUser(): number {

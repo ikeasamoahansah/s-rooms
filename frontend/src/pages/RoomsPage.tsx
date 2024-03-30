@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { getToken } from '../context/auth';
-import axios from 'axios';
+import api from '../api';
 import Rooms from '../components/rooms/Rooms';
 
 const RoomListPage: React.FC = () => {
@@ -8,16 +7,12 @@ const RoomListPage: React.FC = () => {
 
     useEffect(() => {
         const fetchRooms = async () => {
-            var token:string | null = getToken();
+            var route = "/api/rooms/";
             try {
-                const response = await axios.get('http://127.0.0.1:8000/rooms/home/', {
-                    headers: {
-                        Authorization: `token ${token}`,
-                    },
-                });
+                const response = await api.get(route, {});
                 setRooms(response.data);
             } catch(error) {
-                console.log(error);
+                alert("An error occured!");
             }
         }
         fetchRooms();

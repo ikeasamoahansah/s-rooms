@@ -10,7 +10,8 @@ function Login() {
 
     const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const token = await loginUser(username, password);
+        const route = "/api/token/";
+        const token = await loginUser(route, username, password);
         if (token) {
             console.log('Login successful');
             history('/rooms');
