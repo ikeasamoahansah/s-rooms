@@ -11,7 +11,10 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ["id", "email", "first_name"]
+        fields = ["id", "email", "first_name", "password"]
+        extra_kwargs={
+            "password": {"read_only": True}
+        }
 
 
 class RegisterUserSerializer(serializers.ModelSerializer):
