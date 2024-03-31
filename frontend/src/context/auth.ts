@@ -6,7 +6,7 @@ interface LoginResponse {
     token: string;
 }
 
-export async function loginUser(route: string, username: string, password: string): Promise<string | undefined> {
+export async function loginUser({route, username, password}: {route: string, username: string, password: string}): Promise<string | undefined> {
     try {
         const response: AxiosResponse<LoginResponse & { access: string, refresh: string }> = await api.post(
             route,

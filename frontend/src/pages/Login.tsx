@@ -1,6 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { loginUser } from "../context/auth";
+import api from "../api";
+import { ACCESS_TOKEN, REFRESH_TOKEN } from "../constants";
 
 function Login() {
     const history = useNavigate();
@@ -10,14 +11,17 @@ function Login() {
 
     const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const route = "/api/token/";
-        const token = await loginUser(route, username, password);
-        if (token) {
+        try {
+            const res = await api.post('/api/token/', {username, password});
+            localStorage.setItem(ACCESS_TOKEN, res.data.access);
+            localStorage.setItem(REFRESH_TOKEN, res.data.refresh);
+        } catch (error) {
+            setError(error as string);
+        } finally {
             console.log('Login successful');
             history('/rooms');
-        } else {
-            setError('Login failed');
         }
+
     };
 
     return (

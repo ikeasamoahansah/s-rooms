@@ -4,9 +4,6 @@ from django.contrib.auth.models import User
 # import uuid
 
 # from django.conf import settings
-from rest_framework.authtoken.models import Token
-from django.db.models.signals import post_save
-from django.dispatch import receiver
 
 # class CustomUserManager(BaseUserManager):
 #     def create_user(self, email, name, password=None, **extra_fields):
@@ -43,7 +40,3 @@ from django.dispatch import receiver
 #         return f"{self.email}"
 
 
-@receiver(post_save, sender=User)
-def create_auth_token(sender, instance=None, created=False, **kwargs):
-    if created:
-        Token.objects.create(user=instance)
