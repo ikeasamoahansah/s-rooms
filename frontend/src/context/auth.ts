@@ -6,25 +6,25 @@ interface LoginResponse {
     token: string;
 }
 
-export async function loginUser({route, username, password}: {route: string, username: string, password: string}): Promise<string | undefined> {
-    try {
-        const response: AxiosResponse<LoginResponse & { access: string, refresh: string }> = await api.post(
-            route,
-            {
-                username,
-                password
-            }
-        );
-        // Store token in local storage
-        localStorage.setItem(ACCESS_TOKEN, response.data.access);
-        localStorage.setItem(REFRESH_TOKEN, response.data.refresh);
-        return ACCESS_TOKEN;
+// export async function loginUser({route, username, password}: {route: string, username: string, password: string}): Promise<string | undefined> {
+//     try {
+//         const response: AxiosResponse<LoginResponse & { access: string, refresh: string }> = await api.post(
+//             route,
+//             {
+//                 username,
+//                 password
+//             }
+//         );
+//         // Store token in local storage
+//         localStorage.setItem(ACCESS_TOKEN, response.data.access);
+//         localStorage.setItem(REFRESH_TOKEN, response.data.refresh);
+//         return ACCESS_TOKEN;
         
-    } catch (error) {
-        alert(error);
-        return undefined;
-    }
-}
+//     } catch (error) {
+//         alert(error);
+//         return undefined;
+//     }
+// }
 
 export async function logoutUser(): Promise<void> {
     try {
