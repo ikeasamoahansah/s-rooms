@@ -1,7 +1,6 @@
 import React from "react";
 import {Link} from "react-router-dom";
 import api from "../api";
-import Cookies from 'js-cookie';
 
 type UserState = {
     email: String;
@@ -42,16 +41,15 @@ class Signup extends React.Component<{}, UserState>{
             password2: this.state.password2
         }
 
-        const csrftoken = Cookies.get('csrftoken');
-        const url = '/api/accounts/register/';
+        // const csrftoken = Cookies.get('csrftoken');
 
         // Send POST request to Django server
-        const response = await api.post(url, signupData, {
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRFToken': csrftoken || ''
-            },
-        })
+        const response = await api.post("/api/accounts/register/", {
+            email: signupData.email,
+            username: signupData.username,
+            password: signupData.password,
+            password2: signupData.password2
+        });
 
         // Get response from server
         if (response.status === 201){
@@ -105,13 +103,13 @@ class Signup extends React.Component<{}, UserState>{
                             className="border border-gray-300 rounded px-2 py-1"
                         />
                     </div>
+                    <button
+                        type="submit"
+                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                    >
+                        Sign Up
+                    </button>
                 </form>
-                <button
-                    type="submit"
-                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                >
-                    Sign Up
-                </button>
                 <p>
                     Already have an account? <Link to="/login">Login</Link>
                 </p>

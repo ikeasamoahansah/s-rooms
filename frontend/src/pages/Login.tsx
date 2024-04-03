@@ -12,16 +12,13 @@ function Login() {
     const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         try {
-            const res = await api.post('/api/token/', {username, password});
+            const res = await api.post("/api/token/", {username, password}); 
             localStorage.setItem(ACCESS_TOKEN, res.data.access);
             localStorage.setItem(REFRESH_TOKEN, res.data.refresh);
+            history('/rooms')
         } catch (error) {
             setError(error as string);
-        } finally {
-            console.log('Login successful');
-            history('/rooms');
         }
-
     };
 
     return (

@@ -1,9 +1,11 @@
 import axios from 'axios';
 import {ACCESS_TOKEN} from './constants';
 
+// console.log("API Base URL:", import.meta.env.VITE_API_URL);
+
 // Create an instance of axios
 const api = axios.create({
-    baseURL: import.meta.env.REACT_APP_API_URL,
+    baseURL: import.meta.env.VITE_API_URL,
 });
 
 // Add a request interceptor
