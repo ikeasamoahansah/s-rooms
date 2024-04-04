@@ -1,5 +1,6 @@
 import axios, {AxiosResponse} from 'axios';
 import api from '../api';
+import { jwtDecode } from 'jwt-decode';
 import {ACCESS_TOKEN, REFRESH_TOKEN} from '../constants';
 
 interface LoginResponse {
@@ -60,7 +61,9 @@ export function getToken(): string | null {
 }
 
 export function getUser(): number {
-    const userId = localStorage.getItem('userId');
-    if (!userId) throw new Error('No user id stored');
-    return Number(userId);
+    const token = localStorage.getItem(ACCESS_TOKEN);
+    const user = jwtDecode(token!) as { id: number }; // Cast user to the appropriate type
+    console.log(user);
+    
+    return user.id;
 }

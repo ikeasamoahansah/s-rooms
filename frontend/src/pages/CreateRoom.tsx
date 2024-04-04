@@ -16,15 +16,17 @@ const CreateRoom: React.FC = () => {
 
   const handleCreateRoom = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const url = '/api/rooms/create/';
 
-    const postData: object = {
+    const postData: data = {
       name: name,
       user:getUser()
     };
 
     try {
-      const response: AxiosResponse<data> = await api.post(url, postData, {});
+      const response: AxiosResponse<data> = await api.post('/api/rooms/create/', {
+        name: postData.name,
+        user: postData.user
+      });
       console.log(response.data);
       history('/rooms');
     } catch (error) {
