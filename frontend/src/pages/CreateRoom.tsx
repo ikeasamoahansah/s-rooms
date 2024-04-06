@@ -47,7 +47,7 @@ const CreateRoom: React.FC = () => {
             id="name"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            className="border border-gray-300 rounded-md px-3 py-2 mt-1 w-full"
+            className="border border-gray-300 rounded-md px-3 py-3 mt-1 w-full"
           />
         </div>
         <button type="submit" className="bg-blue-500 text-white py-2 px-4 rounded-md">Create Room</button>
