@@ -3,7 +3,7 @@ from rest_framework.generics import ListAPIView
 
 from .models import Room
 from .serializers import RoomSerializer
-from .views import CreateRoomView, RoomDetailView, api_root
+from .views import CreateRoomView, RoomDetailView, JoinRoomView, api_root
 
 urlpatterns = [
     path("", api_root),
@@ -20,4 +20,5 @@ urlpatterns = [
         name="room-create",
     ),
     path("<uuid:pk>/", RoomDetailView.as_view(), name="room-detail"),
+    path("join/<int:pk>/", JoinRoomView.as_view(), name="room-join"),
 ]

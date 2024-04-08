@@ -4,11 +4,11 @@ from django.http import Http404
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.reverse import reverse
-from rest_framework.permissions import IsAdminUser, IsAuthenticated
+from rest_framework.permissions import IsAuthenticated
 from rest_framework import status
 from rest_framework.views import APIView
 
-from accounts.permissions import IsOwnerOrReadOnly
+from accounts.permissions import CanCreateRoom
 
 from .models import Room
 from .serializers import RoomSerializer
@@ -73,3 +73,14 @@ class RoomDetailView(APIView):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
     permission_classes = [IsAuthenticated]
+
+
+class JoinRoomView(APIView):
+    """get a room, add user to the room"""
+    def get(self, request, pk, format=None):
+        room = Room.objects.get(code=pk)
+        user = request.user
+        room.users.add(user)
+        return Response(status=status.HTTP_200_OK)
+
+    permision_classes = [IsAuthenticated,]
