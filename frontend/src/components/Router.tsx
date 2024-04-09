@@ -5,6 +5,7 @@ import HomePage from "../pages/HomePage";
 import RoomListPage from "../pages/RoomsPage";
 import RoomDetail from "../pages/RoomDetail";
 import CreateRoom from "../pages/CreateRoom";
+import JoinRoom from "../pages/JoinRoomPage";
 
 const Router = () => {
     return (
@@ -16,6 +17,7 @@ const Router = () => {
             <Route path="/rooms" element={<RoomListPage />} />
             <Route path="/rooms/create" element={<CreateRoom />} />
             <Route path="/rooms/:id" element={<RoomDetail />} />
+            <Route path="/rooms/join" element={<JoinRoom/>}/>
         </Routes>
         </BrowserRouter>
     );
