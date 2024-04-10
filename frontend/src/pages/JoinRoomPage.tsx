@@ -1,12 +1,21 @@
 import React from "react";
+import api from "../api";
+import { AxiosResponse } from "axios";
 
 const JoinRoom: React.FC = () => {
 
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const code = e.currentTarget.code.value;
         console.log(code);
+
+        try {
+            const res: AxiosResponse = await api.get(`/api/rooms/join/${code}`);
+            console.log(res.data);
+        } catch (error) {
+            console.log(error);
+        }
     }
 
 

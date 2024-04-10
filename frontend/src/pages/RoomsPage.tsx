@@ -2,8 +2,6 @@ import React from 'react';
 
 const RoomListPage: React.FC = () => {
 
-    const code: number = 81317;
-
     return (
         <div className="flex items-center justify-center h-screen">
             <div className="flex-col items-center justify-center">

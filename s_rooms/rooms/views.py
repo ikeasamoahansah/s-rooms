@@ -79,8 +79,9 @@ class JoinRoomView(APIView):
     """get a room, add user to the room"""
     def get(self, request, pk, format=None):
         room = Room.objects.get(code=pk)
-        user = request.user
-        room.users.add(user)
-        return Response(status=status.HTTP_200_OK)
+        # user = request.user
+        # room.users.add(user)
+        serializer = RoomSerializer(room)
+        return Response(serializer.data)
 
     permision_classes = [IsAuthenticated,]
