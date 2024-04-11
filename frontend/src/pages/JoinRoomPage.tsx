@@ -8,7 +8,6 @@ const JoinRoom: React.FC = () => {
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const code = e.currentTarget.code.value;
-        console.log(code);
 
         try {
             const res: AxiosResponse = await api.get(`/api/rooms/join/${code}`);
