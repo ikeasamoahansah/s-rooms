@@ -1,9 +1,10 @@
-import React from "react";
+import React, {useState} from "react";
 import api from "../api";
 import { AxiosResponse } from "axios";
 
 const JoinRoom: React.FC = () => {
 
+    const [error, setError] = useState("");
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -12,8 +13,8 @@ const JoinRoom: React.FC = () => {
         try {
             const res: AxiosResponse = await api.get(`/api/rooms/join/${code}`);
             console.log(res.data);
-        } catch (error) {
-            console.log(error);
+        } catch (err) {
+            setError(err);
         }
     }
 
@@ -27,6 +28,7 @@ const JoinRoom: React.FC = () => {
                     <input type="text" id="code" name="code" />
                     <button type="submit">Join room</button>
                 </form>
+                <h6 className="text-red">{error}</h6>
             </div>
         </div>
     )
