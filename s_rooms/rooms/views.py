@@ -84,4 +84,11 @@ class JoinRoomView(APIView):
         serializer = RoomSerializer(room)
         return Response(serializer.data)
 
+    def post(self, request, pk, format=None):
+        room = Room.objects.get(code=pk)
+        user = request.user
+        room.current_users.add(user)
+        serializer = RoomSerializer(room)
+        return Response(serializer.data)
+
     permision_classes = [IsAuthenticated,]
