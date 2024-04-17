@@ -49,6 +49,7 @@ REST_FRAMEWORK = {
 # AUTH_USER_MODEL = "accounts.CustomUser"
 
 MIDDLEWARE = [
+    "accounts.middleware.TokenExpirationMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "corsheaders.middleware.CorsMiddleware",
@@ -57,7 +58,6 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "accounts.middleware.TokenExpirationMiddleware",
 ]
 
 ROOT_URLCONF = "s_rooms.urls"

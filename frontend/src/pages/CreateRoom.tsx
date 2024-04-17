@@ -2,24 +2,25 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import {AxiosResponse} from "axios";
 import api from "../api";
-import { getUser } from "../context/auth";
+import { useAuth } from "../context/auth";
 
 interface data {
   name: string;
-  user: number;
+  user: number | undefined;
 }
 
 const CreateRoom: React.FC = () => {
   const history = useNavigate();
   const [name, setName] = React.useState('');
   const [error, setError] = React.useState<string | null>('');
+  const {user} = useAuth();
 
   const handleCreateRoom = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const postData: data = {
       name: name,
-      user:getUser()
+      user:user?.id
     };
 
     try {

@@ -1,5 +1,5 @@
 import React from "react";
-import {Link} from "react-router-dom";
+import {Link, redirect} from "react-router-dom";
 import api from "../api";
 
 type UserState = {
@@ -53,7 +53,7 @@ class Signup extends React.Component<{}, UserState>{
 
         // Get response from server
         if (response.status === 201){
-            alert('User created successfully');
+            redirect('/login');
         } else {
             alert('There was an error creating the user');
         }

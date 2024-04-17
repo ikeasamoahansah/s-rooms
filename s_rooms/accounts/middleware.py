@@ -2,6 +2,9 @@ from typing import Any
 from django.shortcuts import redirect
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework_simplejwt.exceptions import InvalidToken, TokenError
+import logging
+
+logger = logging.getLogger(__name__)
 
 class TokenExpirationMiddleware:
     def __init__(self, get_response):
@@ -15,7 +18,8 @@ class TokenExpirationMiddleware:
                 request.user = user
             else:
                 request.user = None
-        except (InvalidToken, TokenError):
+        except (InvalidToken, TokenError) as e:
+            logger.warning(f"Token error {e}")
             if request.user.is_authenticated:
                 redirect("logout")
 

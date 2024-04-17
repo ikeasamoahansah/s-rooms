@@ -1,24 +1,14 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
-import api from "../api";
-import { ACCESS_TOKEN, REFRESH_TOKEN } from "../constants";
+import { useAuth } from "../context/auth";
 
 function Login() {
-    const history = useNavigate();
     const [username, setUsername] = React.useState('');
     const [password, setPassword] = React.useState('');
-    const [error, setError] = React.useState<string | null>('');
+    const {login} = useAuth();
 
     const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        try {
-            const res = await api.post("/api/token/", {username, password}); 
-            localStorage.setItem(ACCESS_TOKEN, res.data.access);
-            localStorage.setItem(REFRESH_TOKEN, res.data.refresh);
-            history('/rooms')
-        } catch (error) {
-            setError(error as string);
-        }
+        await login(username, password);
     };
 
     return (
@@ -43,7 +33,6 @@ function Login() {
                         className="border border-gray-200 rounded px-2 py-1" />
                 </div>
                 <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded">Login</button>
-                {error && <p className="text-red-500">{error}</p>}
             </form>
         </div>
     );
