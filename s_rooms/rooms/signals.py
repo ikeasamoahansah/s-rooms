@@ -4,4 +4,3 @@
 # for room in Room.objects.get():
 #     if room.code == None:
 #         room.code = randint(43211, 99999)
-

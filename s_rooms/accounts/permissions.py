@@ -18,14 +18,15 @@ class IsOwnerOrReadOnly(permissions.BasePermission):
 
 class CanCreateRoom(permissions.BasePermission):
     """
-    Custom permission to only allow users to create 
-    or join a room if they don't belong to any room 
+    Custom permission to only allow users to create
+    or join a room if they don't belong to any room
     already.
     """
+
     def has_permission(self, request, view):
         # Check if the user is authenticated
         if not request.user.is_authenticated:
             return False
-        
+
         # Check if the user belongs to any room
         return not request.user.room_set.exists()

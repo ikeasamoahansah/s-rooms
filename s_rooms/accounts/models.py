@@ -38,5 +38,3 @@ from django.contrib.auth.models import User
 
 #     def __str__(self):
 #         return f"{self.email}"
-
-

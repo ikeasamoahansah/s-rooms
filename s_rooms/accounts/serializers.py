@@ -11,13 +11,14 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     @classmethod
     def get_token(cls, user):
         token = super().get_token(user)
-        
+
         # Add custom claims
-        token['username'] = user.username
-        token['id'] = user.id
-        token['email'] = user.email
-        
+        token["username"] = user.username
+        token["id"] = user.id
+        token["email"] = user.email
+
         return token
+
 
 class UserSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(required=True)
@@ -25,9 +26,7 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ["id", "email", "first_name", "password"]
-        extra_kwargs={
-            "password": {"write_only": True}
-        }
+        extra_kwargs = {"password": {"write_only": True}}
 
 
 class RegisterUserSerializer(serializers.ModelSerializer):
