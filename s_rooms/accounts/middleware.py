@@ -14,6 +14,7 @@ class TokenExpirationMiddleware:
     def __call__(self, request) -> Any:
         user_auth = JWTAuthentication()
         try:
+            # handle error below when 500 request code sent
             user, _ = user_auth.authenticate(request)
             if user is not None and user.is_authenticated:
                 request.user = user
