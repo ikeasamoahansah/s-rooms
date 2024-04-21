@@ -21,7 +21,7 @@ class TokenExpirationMiddleware:
             else:
                 request.user = None
         except (InvalidToken, TokenError) as e:
-            logger.warning(f"Token error {e}")
+            logger.error(f"Token error {e}")
             # response 401 unauthorized
             if request.user.is_authenticated:
                 redirect("logout")
