@@ -34,13 +34,13 @@ api.interceptors.response.use(
             try {
                 const auth = useAuth();
                 const refreshToken = await auth.refreshToken();
-                const logout = await auth.logout();
+                // const logout = await auth.logout();
 
                 error.config.headers.Authorization = `Bearer ${refreshToken}`;
                 return api.request(error.config);
             } catch (refreshError) {
                 console.error('Error refreshing token:', refreshError);
-                logout();
+                // logout();
             }
         }
         return Promise.reject(error);
