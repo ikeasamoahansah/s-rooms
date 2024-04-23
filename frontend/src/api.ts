@@ -30,7 +30,7 @@ api.interceptors.response.use(
         return response;
     },
     async (error) => {
-        if (error.response && error.response.status === 401) {
+        if (error.response && error.response.status === 500) {
             try {
                 const auth = useAuth();
                 const refreshToken = await auth.refreshToken();
