@@ -32,8 +32,8 @@ api.interceptors.response.use(
     async (error) => {
         if (error.response && error.response.status === 500) {
             try {
-                const auth = useAuth();
-                const refreshToken = await auth.refreshToken();
+                // const auth = useAuth();
+                // const refreshToken = await auth.refreshToken();
                 // const logout = await auth.logout();
 
                 error.config.headers.Authorization = `Bearer ${refreshToken}`;
