@@ -20,17 +20,16 @@ const JoinRoom: React.FC = () => {
         }
     }
 
-    const joinRoom = async (e: React.FormEventHandler<HTMLButtonElement>) => {
-        try {
-            if (room) {
-                const { code } = room as { code: string }; // Add type annotation to extract 'code' property
-                api.post(`/api/rooms/join/${code}/`);
-            }
-        } catch (err) {
-            setError(err as string);
-        }
-    }
-
+    // const joinRoom = async (e: React.FormEventHandler<HTMLButtonElement>) => {
+    //     try {
+    //         if (room) {
+    //             const { code } = room as { code: string }; // Add type annotation to extract 'code' property
+    //             api.post(`/api/rooms/join/${code}/`);
+    //         }
+    //     } catch (err) {
+    //         setError(err as string);
+    //     }
+    // }
 
     return (
         <div className="flex items-center justify-center h-screen">
@@ -38,7 +37,7 @@ const JoinRoom: React.FC = () => {
                 <div className="flex flex-col bg-gray-300 rounded-md items-center justify-center p-8">
                     <h2 className="text-2xl">{(room as { name: string }).name}</h2>
                     <div className="bg-blue-500 p-2 rounded text-white">
-                        <button onClick={joinRoom} type="submit">Join room</button>
+                        <button type="submit"><a href={'/rooms/' + (room as { code: string }).code}>Join room</a></button>
                     </div>
                 </div>
             ) : (

@@ -8,7 +8,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework import status
 from rest_framework.views import APIView
 
-from accounts.permissions import CanCreateRoom
+# from accounts.permissions import CanCreateRoom
 
 from .models import Room
 from .serializers import RoomSerializer
@@ -50,7 +50,7 @@ class RoomDetailView(APIView):
 
     def get_object(self, pk):
         try:
-            return Room.objects.get(id=pk)
+            return Room.objects.get(code=pk)
         except Room.DoesNotExist:
             raise Http404
 

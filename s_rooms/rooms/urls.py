@@ -19,6 +19,6 @@ urlpatterns = [
         CreateRoomView.as_view(),
         name="room-create",
     ),
-    path("<uuid:pk>/", RoomDetailView.as_view(), name="room-detail"),
+    path("<int:pk>/", RoomDetailView.as_view(), name="room-detail"),
     path("join/<int:pk>/", JoinRoomView.as_view(), name="room-join"),
 ]
