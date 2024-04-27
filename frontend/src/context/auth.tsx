@@ -14,7 +14,6 @@ interface AuthContextType {
     isAuthenticated: boolean;
     logout: () => Promise<void>;
     login: (username: string, password: string) => Promise<void>;
-    refreshToken: (route: string) => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -68,29 +67,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         }
     }
 
-    const refreshToken = async (): Promise<string | undefined> => {
-        try {
-            const refreshToken = localStorage.getItem(REFRESH_TOKEN);
-            if (!refreshToken) throw new Error('No token stored');
-            const response: AxiosResponse<LoginResponse & { access: string }> = await api.post(
-                '/api/token/refresh/',
-                {refreshToken}
-            );
-            const newToken = response.data.access;
-            // Store token in local storage
-            localStorage.setItem(ACCESS_TOKEN, newToken);
-
-            const decodedUser = jwtDecode(newToken) as User;
-            setUser(decodedUser);
-            return newToken;
-        }catch(error){
-            alert('Error refreshing access token');
-            return undefined;
-        }
-    };
-
     return (
-        <AuthContext.Provider value={{user, isAuthenticated, login, logout, refreshToken}}>
+        <AuthContext.Provider value={{user, isAuthenticated, login, logout}}>
             {children}
         </AuthContext.Provider>
     )

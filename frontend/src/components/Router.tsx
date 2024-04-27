@@ -7,6 +7,7 @@ import RoomListPage from "../pages/RoomsPage";
 import RoomDetail from "../pages/RoomDetail";
 import CreateRoom from "../pages/CreateRoom";
 import JoinRoom from "../pages/JoinRoomPage";
+import ProtectedRoute from "../context/ProtectedRoute";
 
 const Router = () => {
     return (
@@ -15,11 +16,46 @@ const Router = () => {
             <Routes>
                 <Route path="/signup" element={<Signup />} />
                 <Route path="/login" element={<Login />} />
-                <Route path="/" element={<HomePage />} />
-                <Route path="/rooms" element={<RoomListPage />} />
-                <Route path="/rooms/create" element={<CreateRoom />} />
-                <Route path="/rooms/:id" element={<RoomDetail />} />
-                <Route path="/rooms/join" element={<JoinRoom/>}/>
+                <Route 
+                    path="/" 
+                    element={
+                        <ProtectedRoute>
+                            <HomePage />
+                        </ProtectedRoute>
+                    } 
+                />
+                <Route 
+                    path="/rooms" 
+                    element={
+                        <ProtectedRoute>
+                            <RoomListPage />
+                        </ProtectedRoute>
+                    } 
+                />
+                <Route 
+                    path="/rooms/create" 
+                    element={
+                        <ProtectedRoute>
+                            <CreateRoom />
+                        </ProtectedRoute>
+                    } 
+                />
+                <Route 
+                    path="/rooms/:id" 
+                    element={
+                        <ProtectedRoute>
+                            <RoomDetail />
+                        </ProtectedRoute>
+                    } 
+                />
+                <Route 
+                    path="/rooms/join" 
+                    element={
+                        <ProtectedRoute>
+                            <JoinRoom />
+                        </ProtectedRoute>
+                    } 
+                />
             </Routes>
         </AuthProvider>
         </BrowserRouter>

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import {ACCESS_TOKEN} from './constants';
-import { useAuth } from './context/auth';
+// import { useAuth } from './context/auth';
 // console.log("API Base URL:", import.meta.env.VITE_API_URL);
 
 // Create an instance of axios
@@ -25,26 +25,26 @@ api.interceptors.request.use(
     }
 );
 
-api.interceptors.response.use(
-    (response) => {
-        return response;
-    },
-    async (error) => {
-        if (error.response && error.response.status === 500) {
-            try {
-                const auth = useAuth();
-                // const refreshToken = await auth.refreshToken();
-                // const logout = await auth.logout();
+// api.interceptors.response.use(
+//     (response) => {
+//         return response;
+//     },
+//     async (error) => {
+//         if (error.response && error.response.status === 401) {
+//             try {
+//                 const auth = useAuth();
+//                 const refreshToken = await auth.refreshToken();
+//                 const logout = await auth.logout();
 
-                error.config.headers.Authorization = `Bearer ${refreshToken}`;
-                return api.request(error.config);
-            } catch (refreshError) {
-                console.error('Error refreshing token:', refreshError);
-                // logout();
-            }
-        }
-        return Promise.reject(error);
-    }
-)
+//                 error.config.headers.Authorization = `Bearer ${refreshToken}`;
+//                 return api.request(error.config);
+//             } catch (refreshError) {
+//                 console.error('Error refreshing token:', refreshError);
+//                 // logout();
+//             }
+//         }
+//         return Promise.reject(error);
+//     }
+// )
 
 export default api;
