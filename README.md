@@ -1,3 +1,3 @@
 # s-rooms
-A Web Application for users to join and listen to music together.
-Spotify music enabled [x]
+
+A lightweight web app for users to join and listen to music together.
