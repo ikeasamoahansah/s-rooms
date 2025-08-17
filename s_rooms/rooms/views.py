@@ -4,7 +4,7 @@ from django.http import Http404
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.reverse import reverse
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework import status
 from rest_framework.views import APIView
 
@@ -95,3 +95,94 @@ class JoinRoomView(APIView):
     permision_classes = [
         IsAuthenticated,
     ]
+
+
+class SessionJoinRoomView(APIView):
+    """Session-based room joining for anonymous users"""
+    permission_classes = [AllowAny]
+    
+    def post(self, request, pk, format=None):
+        try:
+            room = Room.objects.get(code=pk)
+        except Room.DoesNotExist:
+            return Response(
+                {"error": "Room not found"}, 
+                status=status.HTTP_404_NOT_FOUND
+            )
+        
+        # Check if user is already in a room
+        current_room_code = request.session.get('current_room')
+        if current_room_code:
+            if current_room_code == str(pk):
+                # Already in this room
+                serializer = RoomSerializer(room)
+                return Response({
+                    "message": "Already joined this room",
+                    "room": serializer.data
+                })
+            else:
+                # Already in a different room - not allowed
+                return Response(
+                    {"error": "You are already in another room. Please leave current room first."},
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+        
+        # Join the room by storing room code in session
+        request.session['current_room'] = str(pk)
+        request.session.save()
+        
+        serializer = RoomSerializer(room)
+        return Response({
+            "message": "Successfully joined room",
+            "room": serializer.data
+        }, status=status.HTTP_201_CREATED)
+
+
+class SessionLeaveRoomView(APIView):
+    """Session-based room leaving for anonymous users"""  
+    permission_classes = [AllowAny]
+    
+    def post(self, request, format=None):
+        current_room_code = request.session.get('current_room')
+        
+        if not current_room_code:
+            return Response(
+                {"error": "You are not currently in any room"},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        
+        # Remove room from session
+        del request.session['current_room']
+        request.session.save()
+        
+        return Response({
+            "message": "Successfully left room"
+        }, status=status.HTTP_200_OK)
+
+
+class SessionCurrentRoomView(APIView):
+    """Get the current room from session"""
+    permission_classes = [AllowAny]
+    
+    def get(self, request, format=None):
+        current_room_code = request.session.get('current_room')
+        
+        if not current_room_code:
+            return Response(
+                {"message": "Not currently in any room", "room": None}
+            )
+        
+        try:
+            room = Room.objects.get(code=current_room_code)
+            serializer = RoomSerializer(room)
+            return Response({
+                "message": "Currently in room",
+                "room": serializer.data
+            })
+        except Room.DoesNotExist:
+            # Room was deleted, clean up session
+            del request.session['current_room']
+            request.session.save()
+            return Response(
+                {"message": "Current room no longer exists", "room": None}
+            )
