@@ -3,7 +3,15 @@ from rest_framework.generics import ListAPIView
 
 from .models import Room
 from .serializers import RoomSerializer
-from .views import CreateRoomView, RoomDetailView, JoinRoomView, api_root
+from .views import (
+    CreateRoomView, 
+    RoomDetailView, 
+    JoinRoomView, 
+    SessionJoinRoomView,
+    SessionLeaveRoomView,
+    SessionCurrentRoomView,
+    api_root
+)
 
 urlpatterns = [
     path("", api_root),
@@ -21,4 +29,8 @@ urlpatterns = [
     ),
     path("<int:pk>/", RoomDetailView.as_view(), name="room-detail"),
     path("join/<int:pk>/", JoinRoomView.as_view(), name="room-join"),
+    # Session-based room management
+    path("session-join/<int:pk>/", SessionJoinRoomView.as_view(), name="session-room-join"),
+    path("session-leave/", SessionLeaveRoomView.as_view(), name="session-room-leave"),
+    path("session-current/", SessionCurrentRoomView.as_view(), name="session-current-room"),
 ]
